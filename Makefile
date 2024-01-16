@@ -13,7 +13,7 @@ migrate_up:
 migrate_down:
 	migrate -path db/migrations -database $(DB_URL) -verbose down
 test:
-	go test -v -cover ./..
+	go test -v -cover ./...
 sqlc:
 	sqlc generate
 
