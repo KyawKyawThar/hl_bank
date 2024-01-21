@@ -20,9 +20,9 @@ type CreateAccountParams struct {
 	Balance  int64  `json:"balance"`
 }
 
-func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Accounts, error) {
-	row := q.db.QueryRowContext(ctx, createAccount, arg.Owner, arg.Currency, arg.Balance)
-	var i Accounts
+func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
+	row := q.db.QueryRow(ctx, createAccount, arg.Owner, arg.Currency, arg.Balance)
+	var i Account
 	err := row.Scan(
 		&i.ID,
 		&i.Owner,
@@ -38,7 +38,7 @@ DELETE FROM accounts WHERE id = $1
 `
 
 func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteAccount, id)
+	_, err := q.db.Exec(ctx, deleteAccount, id)
 	return err
 }
 
@@ -48,9 +48,9 @@ FROM accounts
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetAccount(ctx context.Context, id int64) (Accounts, error) {
-	row := q.db.QueryRowContext(ctx, getAccount, id)
-	var i Accounts
+func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
+	row := q.db.QueryRow(ctx, getAccount, id)
+	var i Account
 	err := row.Scan(
 		&i.ID,
 		&i.Owner,
@@ -73,15 +73,15 @@ type ListAccountsParams struct {
 	Offset int32 `json:"offset"`
 }
 
-func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Accounts, error) {
-	rows, err := q.db.QueryContext(ctx, listAccounts, arg.Limit, arg.Offset)
+func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error) {
+	rows, err := q.db.Query(ctx, listAccounts, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []Accounts{}
+	items := []Account{}
 	for rows.Next() {
-		var i Accounts
+		var i Account
 		if err := rows.Scan(
 			&i.ID,
 			&i.Owner,
@@ -92,9 +92,6 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -113,9 +110,9 @@ type UpdateAccountsParams struct {
 	ID      int64 `json:"id"`
 }
 
-func (q *Queries) UpdateAccounts(ctx context.Context, arg UpdateAccountsParams) (Accounts, error) {
-	row := q.db.QueryRowContext(ctx, updateAccounts, arg.Balance, arg.ID)
-	var i Accounts
+func (q *Queries) UpdateAccounts(ctx context.Context, arg UpdateAccountsParams) (Account, error) {
+	row := q.db.QueryRow(ctx, updateAccounts, arg.Balance, arg.ID)
+	var i Account
 	err := row.Scan(
 		&i.ID,
 		&i.Owner,

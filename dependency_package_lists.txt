@@ -20,8 +20,10 @@
   ## after that generate account or something.sql file inside query folder
   ## after use sqlc generate cmd
 
-# pq - A pure Go postgres driver for Go's database/sql
-    ## go get github.com/lib/pq
+# pgx - PostgreSQL Driver and Toolkit and  pure Go driver and toolkit
+# for PostgreSQL.
+
+    ## go get github.com/jackc/pgx/v5
 
 # use Testify for unit test
     ## go get github.com/stretchr/testify

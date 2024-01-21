@@ -5,7 +5,7 @@ postgres:
 create_db:
 	docker exec -it postgres16.1 createdb --username=root --owner=root hl-bank
 drop_db:
-	docker exec -it postgres16.1 dropdb simple-bank
+	docker exec -it postgres16.1 dropdb hl-bank
 new_migration:
 	migrate create -ext sql -dir db/migrations -seq $(name)
 migrate_up:

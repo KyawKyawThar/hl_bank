@@ -17,8 +17,8 @@ func init() {
 }
 
 // RandomInt generate a random int
-func RandomInt(min, max int) int {
-	return (max - min + 1) + min
+func RandomInt(min, max int) int64 {
+	return int64((max - min + 1) + min)
 
 }
 
@@ -30,8 +30,8 @@ func RandomString(length int) string {
 
 		randomStr[i] = alphabet[rand.Intn(len(alphabet))]
 	}
-	//After random String value is bfapr
-	fmt.Printf("After random String value is %v\n", string(randomStr))
+	//Before random String value is bfapr
+	fmt.Printf("Before random String value is %v\n", string(randomStr))
 
 	//After random String value is [98 102 97 112 114]
 	fmt.Printf("After random String value is %v\n", randomStr)
@@ -44,7 +44,7 @@ func RandomOwner() string {
 }
 
 // RandomAmount return random amount of money
-func RandomAmount() int {
+func RandomAmount() int64 {
 	return RandomInt(0, 1000)
 }
 
