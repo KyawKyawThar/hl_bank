@@ -6,6 +6,7 @@ import (
 )
 
 // execTx create function within a transaction
+
 func (store *SQLStore) execTx(ctx context.Context, fn func(q *Queries) error) error {
 
 	tx, err := store.connPool.Begin(ctx)
@@ -15,7 +16,7 @@ func (store *SQLStore) execTx(ctx context.Context, fn func(q *Queries) error) er
 	}
 
 	q := New(tx)
-	fmt.Printf("q in execTx is %v\n", q)
+
 	err = fn(q)
 	if err != nil {
 		if rbErr := tx.Rollback(ctx); rbErr != nil {

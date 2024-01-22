@@ -2,8 +2,13 @@
     ## https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
 
 # To run postgres via through docker run this.
-  ## docker exec -it postgres16 psql -U root
+  ## docker exec -it postgres16.1 psql -U root -d hl-bank
 
+  # to clear postgres cmd use control + l
+
+## For Update postgres cmd used for transaction
+
+# to select database use \c hl-bank
 
 # DB migration cmd from make file
   ## make new_migration name=something you want

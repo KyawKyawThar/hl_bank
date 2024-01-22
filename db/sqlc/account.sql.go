@@ -7,7 +7,6 @@ package db
 
 import (
 	"context"
-
 )
 
 const createAccount = `-- name: CreateAccount :one
@@ -62,6 +61,25 @@ func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
 	return i, err
 }
 
+const getAccountForUpdate = `-- name: GetAccountForUpdate :one
+SELECT id, owner, currency, balance, created_at
+FROM accounts
+WHERE id = $1 LIMIT 1 FOR UPDATE
+`
+
+func (q *Queries) GetAccountForUpdate(ctx context.Context, id int64) (Account, error) {
+	row := q.db.QueryRow(ctx, getAccountForUpdate, id)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Owner,
+		&i.Currency,
+		&i.Balance,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const listAccounts = `-- name: ListAccounts :many
 SELECT id, owner, currency, balance, created_at
 FROM accounts
@@ -92,8 +110,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 			&i.Currency,
 			&i.Balance,
 			&i.CreatedAt,
-		);
-		err != nil {
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
