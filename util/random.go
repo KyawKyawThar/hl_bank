@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -31,10 +30,10 @@ func RandomString(length int) string {
 		randomStr[i] = alphabet[rand.Intn(len(alphabet))]
 	}
 	//Before random String value is bfapr
-	fmt.Printf("Before random String value is %v\n", string(randomStr))
+	// fmt.Printf("Before random String value is %v\n", string(randomStr))
 
 	//After random String value is [98 102 97 112 114]
-	fmt.Printf("After random String value is %v\n", randomStr)
+	// fmt.Printf("After random String value is %v\n", randomStr)
 	return string(randomStr)
 }
 

@@ -19,7 +19,7 @@ var ErrorForeignViolation = &pgconn.PgError{Code: ForeignKeyViolation}
 func ErrorCode(err error) string {
 	var pgErr *pgconn.PgError
 
-	if errors.As(err, &pgconn.PgError{Code: pgErr.Code}) {
+	if errors.As(err, &pgErr) {
 		return pgErr.Code
 	}
 	return ""

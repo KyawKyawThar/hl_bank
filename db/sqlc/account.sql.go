@@ -7,6 +7,7 @@ package db
 
 import (
 	"context"
+
 )
 
 const createAccount = `-- name: CreateAccount :one
@@ -64,17 +65,20 @@ func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
 const listAccounts = `-- name: ListAccounts :many
 SELECT id, owner, currency, balance, created_at
 FROM accounts
-ORDER BY id LIMIT $1
-OFFSET $2
+WHERE owner = $1
+ORDER BY id
+    LIMIT $2
+OFFSET $3
 `
 
 type ListAccountsParams struct {
-	Limit  int32 `json:"limit"`
-	Offset int32 `json:"offset"`
+	Owner  string `json:"owner"`
+	Limit  int32  `json:"limit"`
+	Offset int32  `json:"offset"`
 }
 
 func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error) {
-	rows, err := q.db.Query(ctx, listAccounts, arg.Limit, arg.Offset)
+	rows, err := q.db.Query(ctx, listAccounts, arg.Owner, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +92,8 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 			&i.Currency,
 			&i.Balance,
 			&i.CreatedAt,
-		); err != nil {
+		);
+		err != nil {
 			return nil, err
 		}
 		items = append(items, i)
