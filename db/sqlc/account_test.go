@@ -29,6 +29,7 @@ func createRandomAccount(t *testing.T) Account {
 	require.Equal(t, arg.Currency, acc.Currency)
 
 	return acc
+
 }
 
 func TestCreateAccount(t *testing.T) {
@@ -54,12 +55,12 @@ func TestGetAccount(t *testing.T) {
 func TestUpdateAccount(t *testing.T) {
 	acc1 := createRandomAccount(t)
 
-	arg := UpdateAccountsParams{
+	arg := UpdateAccountParams{
 		Balance: util.RandomAmount(),
 		ID:      acc1.ID,
 	}
 
-	acc2, err := testStore.UpdateAccounts(context.Background(), arg)
+	acc2, err := testStore.UpdateAccount(context.Background(), arg)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, acc2)

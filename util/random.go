@@ -16,8 +16,8 @@ func init() {
 }
 
 // RandomInt generate a random int
-func RandomInt(min, max int) int64 {
-	return int64((max - min + 1) + min)
+func RandomInt(min, max int64) int64 {
+	return rand.Int63n((max - min + 1) + min)
 
 }
 
@@ -44,7 +44,7 @@ func RandomOwner() string {
 
 // RandomAmount return random amount of money
 func RandomAmount() int64 {
-	return RandomInt(0, 1000)
+	return RandomInt(0, 100)
 }
 
 // RandomCurrency generate random currency
