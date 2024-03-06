@@ -6,7 +6,6 @@ import (
 )
 
 // execTx create function within a transaction
-
 func (store *SQLStore) execTx(ctx context.Context, fn func(q *Queries) error) error {
 
 	tx, err := store.connPool.Begin(ctx)

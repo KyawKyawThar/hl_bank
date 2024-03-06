@@ -2,23 +2,20 @@ package db
 
 import (
 	"context"
+	"github.com/hl/hl_bank/util"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"os"
 	"testing"
 )
 
-const (
-	dbDataSource = "postgresql://root:secret@localhost:5432/hl-bank?sslmode=disable"
-)
-
 var testStore Store
 
 func TestMain(m *testing.M) {
 
-	var err error
+	config, err := util.LoadConfig("../../")
 
-	dbPool, err := pgxpool.New(context.Background(), dbDataSource)
+	dbPool, err := pgxpool.New(context.Background(), config.DBSource)
 
 	if err != nil {
 		log.Fatal("Cannot connect to database")

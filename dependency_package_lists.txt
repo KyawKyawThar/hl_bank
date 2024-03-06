@@ -1,10 +1,17 @@
 #For db migration use
     ## https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
 
+    ## Whenever you want to clean your db data always used make migrate down
+
 # To run postgres via through docker run this.
   ## docker exec -it postgres16.1 psql -U root -d hl-bank
 
   # to clear postgres cmd use control + l
+
+ ## docker run --name postgres16 -p 5433:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=super -d postgres:16-alpine
+  ## first 5433 is postgres port and the rest 5432 is container port
+
+ ## POSTGRES_USER=root is the name for default postgres db
 
 ## For Update postgres cmd used for transaction
 
@@ -13,17 +20,14 @@
 # DB migration cmd from make file
   ## make new_migration name=something you want
 
-# To acc psql cmd for db use this cmd
+# To acc psql server shell for db use this cmd
   ## docker exec -it postgres16.1 /bin/sh
   ## createdb --username=root --owner=root simple-bank
+  ## psql simple-bank
 
 # To check terminal cmd use this command line
   ## history | grep "docker run"
 
-# use sqlc to perform CRUD action for postgres
-  ##https://docs.sqlc.dev/en/latest/reference/config.html#version-2
-  ## after that generate account or something.sql file inside query folder
-  ## after use sqlc generate cmd
 
 # pgx - PostgreSQL Driver and Toolkit and  pure Go driver and toolkit
 # for PostgreSQL.
@@ -32,3 +36,20 @@
 
 # use Testify for unit test
     ## go get github.com/stretchr/testify
+
+# for web framework we use gin
+    ## go get "github.com/gin-gonic/gin"
+
+# for load config from file & environment use viper
+  ## go get github.com/spf13/viper
+
+## run this from cmd SERVER_ADDRESS=0.0.0.0:8081 air
+## can run different port using 8080 or 8081 and more convenient
+## deploy app on different environment such as staging or producting
+
+## To test API we used mock DB not testing real DB
+## Benefits INDEPENDENT TEST ( isolate tests data to avoid conflicts )
+## FASTER TESTS (Reduce a lot of time talking to the database)
+## 100% Coverage (Easily setup edge case: unexpected errors)
+   ## go install github.com/golang/mock/mockgen@v1.6.0
+   ## go install github.com/golang/mock/mockgen/model

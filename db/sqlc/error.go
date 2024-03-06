@@ -20,7 +20,7 @@ func ErrorCode(err error) string {
 	var pgErr *pgconn.PgError
 
 	if errors.As(err, &pgErr) {
-		return pgErr.Code
+		return pgErr.Message
 	}
 	return ""
 }
