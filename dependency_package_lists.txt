@@ -47,9 +47,22 @@
 ## can run different port using 8080 or 8081 and more convenient
 ## deploy app on different environment such as staging or producting
 
+## for testing only one file run this  go test -v -run TestUpdateUserOnlyEmail -cover
+
 ## To test API we used mock DB not testing real DB
 ## Benefits INDEPENDENT TEST ( isolate tests data to avoid conflicts )
 ## FASTER TESTS (Reduce a lot of time talking to the database)
 ## 100% Coverage (Easily setup edge case: unexpected errors)
    ## go install github.com/golang/mock/mockgen@v1.6.0
    ## go install github.com/golang/mock/mockgen/model
+
+## To setUp pipeline and install dependencies use linux base
+## To install migrate cli pre-built binary for Linux
+## copy link address of .tar.gz
+## use | character to run multiple commend
+## to get the file name run this cmd your local machine
+## curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
+## use ls - l cmd and copy file name (in this example migrate*)
+## sudo mv migrate* /usr/bin/migrate
+## use which migrate cmd to check whether if the migrate cli binary is successfully installed or not.
+## then remove this one using rm cmd from your local machine
